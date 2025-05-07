@@ -61,7 +61,7 @@ function Dashboard() {
   const handleLogout = async () => {
     try {
       const response = await fetch("http://localhost:7000/api/auth/signout", {
-        method: "GET",
+        method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",

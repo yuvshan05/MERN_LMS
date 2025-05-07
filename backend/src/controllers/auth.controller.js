@@ -33,12 +33,21 @@ export const signup = async (req, res, next) => {
 
         await newUser.save();
 
-        // Generate JWT token
-        const token = newUser.generateAuthToken();
+        // Generate JWT token using jwt.sign instead of model method
+        const token = jwt.sign({ id: newUser._id, role: newUser.role }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+        });
+
+        // Set token in cookie - using access_token for consistency
+        res.cookie("access_token", token, {
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            httpOnly: true, // prevent XSS attacks
+            sameSite: "strict", // prevent CSRF attacks
+            secure: process.env.NODE_ENV === "production",
+        });
 
         res.status(201).json({
-            message: "Signup successful",
-            token,
+            success: true,
             user: {
                 id: newUser._id,
                 name: newUser.name,
@@ -49,9 +58,11 @@ export const signup = async (req, res, next) => {
         });
 
     } catch (error) {
+        console.log("Error in signup controller", error);
         next(errorHandler(500, 'Internal Server Error'));
     }
 };
+
 
 export const signin = async (req, res, next) => {
     const { email, password } = req.body;
@@ -89,6 +100,7 @@ export const signin = async (req, res, next) => {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production', // Only secure in production
                 sameSite: 'strict',
+                maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days - adding this for consistency
             })
             .json({
                 message: "Signin successful",
@@ -120,9 +132,13 @@ export const signout = async (req, res, next) => {
         console.log(`✅ Found user: ${user.email}`);
 
         // ✅ Clear authentication cookie and send response
-        res.clearCookie("access_token")
-            .status(200)
-            .json({ message: "Signout successful!" });
+        res.clearCookie("access_token", {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict'
+        })
+        .status(200)
+        .json({ message: "Signout successful!" });
 
         console.log("✅ User signed out successfully!");
 

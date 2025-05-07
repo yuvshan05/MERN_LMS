@@ -45,6 +45,7 @@ function SignupPage() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Add this line to handle cookies
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
