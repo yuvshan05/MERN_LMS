@@ -19,7 +19,7 @@ const CoursePage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await fetch(`http://localhost:7000/api/course/${courseId}`);
+        const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/${courseId}`);
         const data = await res.json();
         setCourse(data);
       } catch (err) {
@@ -36,7 +36,7 @@ const CoursePage = () => {
     const checkPurchaseStatus = async () => {
       try {
         // This endpoint would need to be created in your backend
-        const res = await fetch(`http://localhost:7000/api/course/purchased`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/purchased`, {
           credentials: 'include',
         });
         const data = await res.json();
@@ -58,7 +58,7 @@ const CoursePage = () => {
   const handlePurchase = async () => {
     setPurchasing(true);
     try {
-      const res = await fetch(`http://localhost:7000/api/course/buy/${courseId}`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/buy/${courseId}`, {
         method: 'POST',
         credentials: 'include', // to include cookies for authentication
         headers: {

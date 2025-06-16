@@ -20,7 +20,7 @@ export default function LearnPage() {
   useEffect(() => {
     async function fetchCourses() {
       try {
-        const res = await fetch('http://localhost:7000/api/course/purchased', {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/purchased`, {
           credentials: 'include',
         });
         if (!res.ok) {

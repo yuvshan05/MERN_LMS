@@ -40,7 +40,7 @@ function SignupPage() {
       setError('');
       
       // Send request to your backend using Fetch API
-      const response = await fetch('http://localhost:7000/api/auth/signup', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

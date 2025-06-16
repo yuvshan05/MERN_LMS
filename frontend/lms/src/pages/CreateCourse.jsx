@@ -67,7 +67,7 @@ const CourseCreationForm = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 1200)); // Simulated delay for animation
       
-      const response = await fetch("http://localhost:7000/api/course/create", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

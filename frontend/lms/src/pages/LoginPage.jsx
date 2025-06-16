@@ -32,7 +32,7 @@ function LoginPage() {
     try {
       setLoading(true);
       
-      const response = await fetch("http://localhost:7000/api/auth/signin", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/auth/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

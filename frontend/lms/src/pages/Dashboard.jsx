@@ -21,7 +21,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch("http://localhost:7000/api/course/all");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/all`);
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
@@ -40,7 +40,7 @@ function Dashboard() {
     const fetchTeacherStats = async () => {
       if (user && user.role === "teacher") {
         try {
-          const response = await fetch("http://localhost:7000/api/teacher/stats", {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/teacher/stats`, {
             headers: {
               "Authorization": `Bearer ${localStorage.getItem("token")}`
             }
@@ -61,7 +61,7 @@ function Dashboard() {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:7000/api/auth/signout", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND}/api/auth/signout`, {
         method: "POST",
         credentials: "include",
         headers: {

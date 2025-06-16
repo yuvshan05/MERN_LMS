@@ -14,7 +14,7 @@ const CourseLearnPage = () => {
   useEffect(() => {
     const fetchCourse = async () => {
       try {
-        const res = await fetch(`http://localhost:7000/api/course/enrolled/${courseId}`, {
+        const res = await fetch(`${import.meta.env.VITE_BACKEND}/api/course/enrolled/${courseId}`, {
           credentials: "include",
         });
         if (!res.ok) throw new Error("Not enrolled or course not found");
