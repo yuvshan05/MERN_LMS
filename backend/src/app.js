@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 //app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(cors({
-    origin: 'http://localhost:5173', // Your frontend URL exactly
+    origin: 'https://mern-lms-frontend.onrender.com', // Your frontend URL exactly
     credentials: true,               // Allow credentials (cookies)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']

@@ -42,8 +42,8 @@ export const signup = async (req, res, next) => {
         res.cookie("access_token", token, {
             maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
             httpOnly: true, // prevent XSS attacks
-            sameSite: "strict", // prevent CSRF attacks
-            secure: process.env.NODE_ENV === "production",
+            sameSite: "none", // prevent CSRF attacks
+            secure: true,
         });
 
         res.status(201).json({
@@ -98,8 +98,8 @@ export const signin = async (req, res, next) => {
         res.status(200)
             .cookie('access_token', token, {
                 httpOnly: true,
-                secure: process.env.NODE_ENV === 'production', // Only secure in production
-                sameSite: 'strict',
+                secure: true, // Only secure in production
+                sameSite: "none",
                 maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days - adding this for consistency
             })
             .json({
@@ -134,8 +134,8 @@ export const signout = async (req, res, next) => {
         // ✅ Clear authentication cookie and send response
         res.clearCookie("access_token", {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict'
+            secure: true,
+            sameSite: "none"
         })
         .status(200)
         .json({ message: "Signout successful!" });
